@@ -1,0 +1,70 @@
+<!doctype html>
+<html class="no-js" lang="PT-BR">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Editor de Mapas para Brinquedos Programáveis</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/Material/bootstrap-material-design.min.css" >
+        <link rel="stylesheet" href="css/Bootstrap/bootstrap.min.css" >
+        <link rel="stylesheet" href="css/Bootstrap/bootstrap-theme.min.css" >
+
+        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    </head>
+    <body ng-app="ddApp">
+
+        <div ng-controller="ddController" style="margin-top:50px;">
+            <div class="row">
+                <div class="col-sm-1"></div>
+                    <div class="cat" ng-repeat="categoria in categorias" data-nome="{{ categoria.nome }}" style="background-image: url('{{ categoria.imgUrl }}')" ng-click="selecionaCategoria(categoria.nome)" ></div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-1">
+                    <div class="peg" x-lvl-draggable="true"  ng-repeat="tile in tiles" data-id="{{ tile.id }}"  data-img="{{ tile.imgUrl }}" style="background-image: url('{{ tile.imgUrl }}')" ></div>
+                </div>
+
+                <div class="col-sm-9 col-md-5">
+                    <div ng-repeat="row in cells track by $index">
+                        <div class="slot" ng-repeat="cell in row track by $index" data-id="0" data-img="null"  x-lvl-draggable='true' x-lvl-drop-target="true" x-on-drop="dropped(dragEl, dropEl)">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="lixeira">
+                        <img class="img-responsive lixo" ng-src="images/lixeira.png" x-lvl-drop-target="true" x-on-drop="dropped(dragEl, dropEl)" />
+                    </div>
+                    <label>Linhas</label>
+                    <select ng-model="length" ng-options="length for length in sizes">
+                    </select>
+                    <table>
+                        <label>Colunas</label>
+                        <select ng-model="width" ng-options="width for width in sizes">
+                        </select>
+
+                    <div>
+                        <button id="expJ" >Gera matriz</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <script src="js/JQuery/jquery-3.1.0.min.js"></script>
+        <script src="js/Framework/angular-old.js"></script>
+        <script src="js/AngularDnD/lvl-drag-drop.js"></script>
+        <script src="js/AngularDnD/lvl-uuid.js"></script>
+        <script src="js/Bootstrap/bootstrap.min.js"></script>
+        <script src="js/Material/material.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
