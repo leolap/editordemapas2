@@ -163,28 +163,35 @@ angular
 
             if(drag) {
 
-
-
                 var img = drag.attr('data-img');
                 var id = drag.attr('data-id');
 
-                console.log("Dropou1", drag, dom, id);
+                if(drag[0] === dom[0]){
 
-                dom.attr('src', img);
+                    if(evt.event.changedTouches) {
+                        var changedTouch = evt.event.changedTouches[0];
+                        var elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
+
+                        dom = $(elem);
+
+
+                        if(!drag.hasClass('peg')) {
+                            drag.attr("style"," ");
+                            drag.attr('data-id', 0);
+                            drag.attr('data-img', "Null");
+                        }
+                    }
+                }
+
+                dom.attr("style","background-image:url("+img+")");
                 dom.attr('data-img', img);
                 dom.attr('data-id', id);
-
-                if(!drag.hasClass('peg')) {
-                    //drag.attr('src', "//:0");
-                    //drag.attr('data-id', 0);
-                    //drag.attr('data-img', "Null");
-                }
 
             }else{
 
                 console.log("Dropou2", drag, dom);
 
-                dom.attr('src', "//:0");
+                dom.attr("style"," ");
                 dom.attr('data-id', 0);
                 dom.attr('data-img', "Null");
 
@@ -196,7 +203,7 @@ angular
         $scope.lixo = function(evt) {
 
             if(!drag.hasClass('peg')) {
-                drag.attr('src', "//:0");
+                drag.attr("style"," ");
                 drag.attr('data-id', 0);
                 drag.attr('data-img', "Null");
             }
@@ -210,8 +217,6 @@ angular
 
                 drag = dom;
 
-                console.log(drag);
-
             }
         };
 
@@ -224,7 +229,7 @@ angular
             var slotsId = new Array();
 
 
-            $('.tileImg').each(function (key) {
+            $('.slot').each(function (key) {
 
                 slotsId.push( $(this).attr('data-id')  );
 
@@ -301,14 +306,14 @@ angular
                     }
 
 
-                    $('.tileImg').each(function (key) {
+                    $('.slot').each(function (key) {
 
                         var id = ids.shift();
 
                         var img = idToImageUrl(id);
 
                         if(img) {
-                            $(this).attr("src", img);
+                            $(this).attr("style","background-image:url("+img+")");
                             $(this).attr('data-img', img);
                         }
                         $(this).attr('data-id', id);
@@ -335,7 +340,7 @@ angular
             var tamanhoImagem = 400;
 
 
-            $('.tileImg').each(function (key) {
+            $('.slot').each(function (key) {
 
                 slotsImg.push( $(this).attr('data-img')  );
 

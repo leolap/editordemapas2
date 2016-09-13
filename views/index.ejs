@@ -28,10 +28,9 @@
 
         <div class="col-sm-9 col-md-5">
             <div ng-repeat="row in cells track by $index">
-                <div class="slot" ng-repeat="cell in row track by $index" ng-drop="true" ng-drop-success="dropped($event)">
-                    <img class="tileImg" ng-drag="true" ng-drag-data="tile" data-id="0" data-img="null"
-                         ng-drag-start="onDragStart($data,$event)"
-                         style="width:100%; height:100%;" />
+                <div class="slot" ng-repeat="cell in row track by $index" ng-drop="true" ng-drop-success="dropped($event)" ng-drag="true" ng-drag-data="tile" data-id="0" data-img="null"
+                     ng-drag-start="onDragStart($data,$event)" >
+
                 </div>
             </div>
             <div ng-show="false">
