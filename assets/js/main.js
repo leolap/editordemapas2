@@ -331,6 +331,21 @@ angular
         });
 
 
+        $scope.limpaTudo = function (){
+
+            $('.slot').each(function (key) {
+
+                var $this = $(this);
+
+                $this.attr("style"," ");
+                $this.attr('data-id', 0);
+                $this.attr('data-img', "Null");
+
+            });
+
+        }
+
+
     }]);
 
 
