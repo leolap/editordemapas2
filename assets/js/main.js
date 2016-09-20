@@ -10,8 +10,8 @@ angular
         ];
 
         //tamanhos
-        var maxRow = 7;
-        var maxCol = 7;
+        var maxRow = 5;
+        var maxCol = 5;
         var minRow = 3;
         var minCol = 3;
 
@@ -125,39 +125,11 @@ angular
         };
 
 
-
-
-//        $scope.dropped = function(dragEl, dropEl) {
-//
-//            var drop = angular.element(dropEl);
-//            var drag = angular.element(dragEl);
-//
-//
-//            var isSlot = drag.hasClass("slot");
-//
-//
-//            var img = drag.attr("data-img");
-//
-//            var id =  drag.attr('data-id');
-//
-//            drop.attr("style","background-image:url("+img+")");
-//            drop.attr('data-img', img);
-//            drop.attr('data-id', id);
-//
-//            if ((isSlot) && (drag.attr("x-lvl-drop-target"))) {
-//                drag.attr("style", "");
-//                drag.attr('data-img', "");
-//                drag.attr('data-id', "0");
-//            }
-//
-//
-//        }
-
-
         var drag = undefined;
 
 
         $scope.dropped = function(evt) {
+
 
             var dom = $(evt.event.target);
 
@@ -173,13 +145,6 @@ angular
                         var elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
 
                         dom = $(elem);
-
-
-                        if(!drag.hasClass('peg')) {
-                            drag.attr("style"," ");
-                            drag.attr('data-id', 0);
-                            drag.attr('data-img', "Null");
-                        }
                     }
                 }
 
@@ -187,13 +152,11 @@ angular
                 dom.attr('data-img', img);
                 dom.attr('data-id', id);
 
-            }else{
-
-                console.log("Dropou2", drag, dom);
-
-                dom.attr("style"," ");
-                dom.attr('data-id', 0);
-                dom.attr('data-img', "Null");
+                if(!drag.hasClass('peg')) {
+                    drag.attr("style"," ");
+                    drag.attr('data-id', 0);
+                    drag.attr('data-img', "Null");
+                }
 
             }
 

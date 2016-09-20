@@ -12,7 +12,10 @@ html {
     color: #222;
     font-size: 1em;
     line-height: 1.4;
+    font-family: "Times New Roman", Times, serif;
 }
+
+html,body { height:100%; }
 
 /*
  * Remove text-shadow in selection highlight:
@@ -89,20 +92,6 @@ textarea {
    ========================================================================== */
 
 
-
-
-
-.lvl-over.slot {
-    border: 2px dashed black !important;
-}
-
-
-.lvl-target.slot {
-    background-color: #ddd;
-    opacity: .5;
-}
-
-
 [draggable] {
     /* not applied by the directive, but useful to indicate a draggable element */
     -moz-user-select: none;
@@ -111,35 +100,107 @@ textarea {
     user-select: none;
     cursor: move;
     border:1px solid black;
+    z-index: 100000;
+}
+
+div{
+    position: relative;
+}
+
+.btn{
+    padding: 1vw !important;
+}
+
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 1vw;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+}
+
+
+.topo {
+    background-color: rgb(170, 225, 90);
+    padding: 2.5vw 10vw;
+}
+
+.esquerda{
+    background-color: rgb(125, 175, 210);
+}
+
+.direita{
+    background-color: rgb(255, 250, 90);
+}
+
+.fundo{
+    background-color: rgb(205, 130, 180);
+    min-height: 5vw;
 }
 
 .peg {
+    overflow: hidden;
     border:1px black solid;
-    width: 100px;
-    height: 100px;
-    margin: 10px;
+    width: 5vw;
+    height: 5vw;
+    margin: 1vw 0 0 1.5vw;
+    display:inline-block;
+    background-color: rgb(125, 175, 210);
     background-repeat:no-repeat;
     background-size:contain;
     background-position:center;
 }
 
+.row{
+    display: flex;
+}
+
 .slot {
+    opacity: .99;
     margin-right:2px;
     margin-top:2px;
-    width:100px;
-    height:100px;
+    width: 10vw;
+    height: 10vw;
     display:inline-block;
     border: 0.5px solid black;
+    background-color: rgba(255, 250, 90, 0);
     background-repeat:no-repeat;
     background-size:contain;
     background-position:center;
+}
+
+.rosa{
+    background-color: rgb(130,55,115) !important;
+    color: rgba(255,255,255,.84) !important;
+    padding: 1vw !important;
+    margin-left: 18vw !important;
 }
 
 .cat {
     cursor: pointer;
-    margin:25px;
-    width:100px;
-    height:100px;
+    border-radius: 1vw;
+    box-shadow: 0.3vw 0.3vw 1vw #333;
+    margin: 1vw;
+    width: 10vw;
+    height: 10vw;
     display:inline-block;
     border: 0.5px solid black;
     background-repeat:no-repeat;
@@ -148,17 +209,17 @@ textarea {
 }
 
 .lixeira{
+    text-align: center;
+    height: 5vw;
+    width: 5vw;
+    opacity: .99;
     margin-bottom: 20px;
+    background-image: none !important ;
+    background-color: rgb(250, 160, 35);
     border: 1px solid transparent;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-    box-shadow: 0 1px 2px rgba(0,0,0,.05);
-}
-
-.lixo{
-    background-image: none !important ;
-    width: 100px;
-    height: 100px;
+    box-shadow: 0.2vw 0.2vw 0.6vw #333;
 }
 
 pre strong {
