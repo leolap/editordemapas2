@@ -1,6 +1,18 @@
+$(document).ready(function(){
+
+    $(document).bind("ajaxSend", function() {
+        $('#spinner').show();
+    }).bind("ajaxStop", function() {
+        $('#spinner').hide();
+    }).bind("ajaxError", function() {
+        $('#spinner').hide();
+    });
+
+});
+
 
 angular
-    .module('ddApp', ['ngDraggable']) // register the directive with your app module
+    .module('ddApp', ['ngTouch', 'ngDraggable']) // register the directive with your app module
     .controller('ddController', ['$scope' , function($scope){ // function referenced by the drop target
 
 
@@ -103,26 +115,50 @@ angular
         ];
 
         var tilesArray = [];
-        $scope.tiles = tilesArray;
 
-        $scope.selecionaCategoria = function(nomeCategoria){
-            var tilesArray = [];
-            var idC = nomeCategoria.substring(0,3);
+        function preencheTiles(info){
+            tilesArray = [];
 
-            for(var i = 1; i < 6; i++ ){
+            for(var i = 1; i < info.count; i++ ){
 
                 var tile = {
-                    "id" : idC+"-"+i,
-                    "categoria" : nomeCategoria,
-                    "imgUrl" : "images/"+nomeCategoria+"/"+i+".png"
+                    "id" : info.idC+"-"+i,
+                    "categoria" : info.nomeCategoria,
+                    "imgUrl" : "images/"+info.nomeCategoria+"/"+i+".png"
                 };
 
                 tilesArray.push(tile);
             }
 
-            $scope.tiles = tilesArray;
+        }
+
+
+        $scope.selecionaCategoria = function(nomeCategoria){
+
+            var info = {
+                idC : nomeCategoria.substring(0,3),
+                nomeCategoria : nomeCategoria,
+                dir : { dir : "images/"+nomeCategoria+"/"},
+                count: 5
+
+            }
+
+            $.when($.ajax({
+                url: 'fileCount',
+                type: "GET",
+                data: info.dir,
+                success: function(data) {
+                    info.count = data.count;
+                    preencheTiles(info);
+                }
+            })).done(function () {
+                $scope.tiles = tilesArray;
+                $scope.$apply();
+
+            });
 
         };
+
 
 
         var drag = undefined;
@@ -328,6 +364,57 @@ angular
             }
 
             window.open().location = canvas.toDataURL("image/‌​png");
+        });
+
+        $('.centro').on('click', '.rotate', function(){
+
+            $this = $(this).parent();
+
+
+            var graus = $this.attr('data-deg');
+
+            var grausNovo = 0;
+            var classeVelha;
+            var classeNova;
+
+            switch(graus){
+                case "0":
+
+                    grausNovo = 90;
+                    classeNova = "rot90";
+                    break;
+
+                case "90":
+
+                    grausNovo = 180;
+                    classeVelha = "rot90";
+                    classeNova = "rot180";
+                    break;
+
+                case "180":
+                    grausNovo = 270;
+                    classeVelha = "rot180";
+                    classeNova = "rot270";
+                    break;
+
+                case "270":
+                    grausNovo = 0;
+                    classeVelha = "rot270";
+                    break;
+                default :
+
+                    grausNovo = 0;
+                    break;
+
+            }
+
+            $this.attr('data-deg', grausNovo);
+            if(classeVelha)
+                $this.removeClass(classeVelha);
+            if(classeNova)
+                $this.addClass(classeNova);
+
+
         });
 
 

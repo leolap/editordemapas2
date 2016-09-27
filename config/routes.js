@@ -48,6 +48,6 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'get /downloadJson': 'DownloadController.json'
+  'get /fileCount': 'FileController.count'
 
 };

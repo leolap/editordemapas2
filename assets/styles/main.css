@@ -137,6 +137,19 @@ div{
     font-feature-settings: 'liga';
 }
 
+.spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px; /* half width of the spinner gif */
+    margin-top: -50px; /* half height of the spinner gif */
+    text-align:center;
+    z-index:1234;
+    overflow: auto;
+    width: 100px; /* width of the spinner gif */
+    height: 102px; /*hight of the spinner gif +2px to fix IE8 issue */
+}
+
 
 .topo {
     background-color: rgb(170, 225, 90);
@@ -181,6 +194,7 @@ div{
     height: 10vw;
     display:inline-block;
     border: 0.5px solid black;
+    text-align: center;
     background-color: rgba(255, 250, 90, 0);
     background-repeat:no-repeat;
     background-size:contain;
@@ -222,14 +236,28 @@ div{
     box-shadow: 0.2vw 0.2vw 0.6vw #333;
 }
 
+.rot90{
+    transform:rotate(90deg);
+}
+
+.rot180{
+    transform:rotate(180deg);
+}
+
+.rot270{
+    transform:rotate(270deg);
+}
+
+.rotate{
+    display: block;
+    margin: 3.8vw;
+    width: 1vw;
+    height: 1vw;
+}
+
 pre strong {
     font-size:12pt;
 }
-
-
-
-
-
 
 
 
