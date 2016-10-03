@@ -169,6 +169,10 @@ angular
 
             var dom = $(evt.event.target);
 
+            if(dom.hasClass('rotateImage')){
+                dom = dom.closest('div');
+            }
+
             if(drag) {
 
                 var img = drag.attr('data-img');
@@ -276,6 +280,24 @@ angular
 
         }
 
+        function degreeToRadians(deg){
+
+            switch(parseInt(deg)){
+                case 0:
+                    return 0;
+                case 90:
+                    return Math.PI/2;
+                case 180:
+                    return  Math.PI;
+                case 270:
+                    return Math.PI*3/2;
+                default :
+                    return 0;
+
+            }
+        }
+
+
         $("#impJ").change(function( evt ) {
 
             var files = evt.target.files; // FileList object
@@ -340,31 +362,53 @@ angular
 
 
             $('.slot').each(function (key) {
-
-                slotsImg.push( $(this).attr('data-img')  );
-
+                slotsImg.push( { 'imagem' : $(this).attr('data-img'), 'rotacao' : $(this).attr('data-deg') }  );
             });
 
-            canvas.height = $scope.length * tamanhoImagem;
-            canvas.width = $scope.width * tamanhoImagem;
+           canvas.height = $scope.length * tamanhoImagem;
+           canvas.width = $scope.width * tamanhoImagem;
 
+
+            var TO_RADIANS = Math.PI/180;
 
             for (var i = 0; i < $scope.length; i++){
                 for (var j = 0; j < $scope.width; j++){
-                        var imageObj = new Image();
-                        imageObj.src = slotsImg.shift();
-                        imageObj.setAtX = j * tamanhoImagem;
-                        imageObj.setAtY = i * tamanhoImagem;
-                        imageObj.onload = function() {
-                            ctx.drawImage(this, this.setAtX, this.setAtY, tamanhoImagem, tamanhoImagem);
-                        };
+                    var imageSlot = slotsImg.shift();
+                    var rotacao = imageSlot.rotacao;
+                    var imageObj = new Image();
+                    imageObj.src = imageSlot.imagem;
+                    imageObj.setAtX = j * tamanhoImagem;
+                    imageObj.setAtY = i * tamanhoImagem;
+                    imageObj.onload = function() {
+                        ctx.save();
+
+                        ctx.rotate(rotacao * TO_RADIANS);
+
+                        ctx.drawImage(this, this.setAtX, this.setAtY, tamanhoImagem, tamanhoImagem);
+
+                        ctx.rotate( -1 * (rotacao * TO_RADIANS));
+
+                        ctx.restore();
+                    };
 
                 }
 
             }
 
+
             window.open().location = canvas.toDataURL("image/‌​png");
         });
+
+
+        function drawRotated(image, context) {
+            context.save();
+            context.translate(100, 100);
+            context.rotate(Math.PI / 4);
+            context.drawImage(image, -image.width / 2, -image.height / 2);
+            context.restore();
+        }
+
+
 
         $('.centro').on('click', '.rotate', function(){
 
