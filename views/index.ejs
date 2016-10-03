@@ -7,10 +7,6 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet">
-
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Place favicon.ico in the root directory -->
 
@@ -25,11 +21,21 @@
 <div ng-controller="ddController">
 
     <div class="row topo">
-        <div class="cat" ng-repeat="categoria in categorias" data-nome="{{ categoria.nome }}" style="background-image: url('{{ categoria.imgUrl }}')" ng-click="selecionaCategoria(categoria.nome)" ></div>
+        <div class="col-xs-9">
+            <div class="cat" ng-repeat="categoria in categorias" data-nome="{{ categoria.nome }}" style="background-image: url('{{ categoria.imgUrl }}')" ng-click="selecionaCategoria(categoria.nome)" ></div>
+        </div>
+        <div class="col-xs-3">
+            <img class="maos" src="images/icones/tap-2.svg" />
+        </div>
     </div>
 
     <div class="row centro">
         <div class="col-xs-2 esquerda">
+            <div class="row">
+                <div class="col-xs-offset-9 col-xs-3">
+                    <img class="maos" src="images/icones/pointing-up-2.svg" />
+                </div>
+            </div>
             <div style="z-index: 1">
                 <div class="peg" ng-repeat="tile in tiles" data-id="{{ tile.id }}"  data-img="{{ tile.imgUrl }}" style="background-image: url('{{ tile.imgUrl }}')"
                      ng-drag="true" ng-drag-data="tile" data-allow-transform="true" ng-drag-start="onDragStart($data,$event)"></div>
@@ -49,15 +55,39 @@
             </div>
         </div>
         <div class="col-xs-2 direita">
-            <div class="lixeira" ng-click="limpaTudo()" ng-drop-success="lixo($event)" ng-drop="true">
-                <i class="material-icons" style="font-size: 5vw; cursor: pointer">delete</i>
+            <div class="row">
+                <div class="col-xs-7">
+                    <div class="lixeira" ng-click="limpaTudo()" ng-drop-success="lixo($event)" ng-drop="true">
+                        <img src="images/icones/lixeira.svg" />
+                    </div>
+                </div>
+                <div class="col-xs-5">
+                    <img class="maos" src="images/icones/tap-2.svg" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <button class="btn btn-raised btn-warning" ng-click="sizeChange(true,false)">
+                        <img class="arrows" src="images/icones/right-arrow-6.svg" />
+                    </button>
+
+
+                    <button class="btn btn-raised btn-warning" ng-click="sizeChange(false,false)">
+                        <img class="arrows" src="images/icones/left-arrow-6.svg" />
+                    </button>
+                </div>
             </div>
 
-            <button class="btn btn-raised btn-warning" ng-click="sizeChange(true,false)"><i class="material-icons">keyboard_arrow_right</i></button>
-            <button class="btn btn-raised btn-warning" ng-click="sizeChange(false,false)"><i class="material-icons">keyboard_arrow_left</i></button>
-
-            <button class="btn btn-raised btn-warning"  ng-click="sizeChange(true,true)"><i class="material-icons">keyboard_arrow_down</i></button>
-            <button class="btn btn-raised btn-warning" ng-click="sizeChange(false,true)"><i class="material-icons">keyboard_arrow_up</i></button>
+            <div class="row">
+                <div class="col-xs-12">
+                    <button class="btn btn-raised btn-warning"  ng-click="sizeChange(true,true)">
+                        <img class="arrows" src="images/icones/down-arrow-2.svg" />
+                    </button>
+                    <button class="btn btn-raised btn-warning" ng-click="sizeChange(false,true)">
+                        <img class="arrows" src="images/icones/up-arrow-7.svg" />
+                    </button>
+                </div>
+            </div>
 
         </div>
 
@@ -65,12 +95,12 @@
 
     <div class="row fundo">
         <div class="col-xs-12">
-            <a href="#" id="expJ" class="btn btn-raised rosa" download="mapa.json"><i class="material-icons">file_download</i> Exportar</a>
+            <a href="#" id="expJ" class="btn btn-raised rosa" download="mapa.json"><img class="arrows" src="images/icones/download-1.svg" /> Exportar </a>
             <label for="impJ" class="btn btn-raised rosa">
-                <i class="material-icons">file_upload</i> Importar
+                <img class="arrows" src="images/icones/up-arrow-5.svg" /> Importar
             </label>
             <input ng-show="false" type="file" id="impJ" />
-            <a href="#" class="btn btn-raised rosa" id="expI"><i class="material-icons">image</i> Mapa</a>
+            <a href="#" class="btn btn-raised rosa" id="expI"><img class="arrows" src="images/icones/mapa.svg" /> Mapa</a>
         </div>
     </div>
 
