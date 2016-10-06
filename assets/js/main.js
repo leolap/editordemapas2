@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+    //mostra o spinner quando há um ajax na página.
     $(document).bind("ajaxSend", function() {
         $('#spinner').show();
     }).bind("ajaxStop", function() {
@@ -21,7 +22,7 @@ angular
             []
         ];
 
-        //tamanhos
+        //tamanhos máximo e mínimos de linha e colunas e de cada imagem.
         var maxRow = 5;
         var maxCol = 5;
         var minRow = 3;
@@ -32,6 +33,7 @@ angular
             'largura' : 300
         };
 
+
         $scope.sizes = [];
 
         $scope.length = minRow;
@@ -39,7 +41,9 @@ angular
 
         $scope.imagem = imagem;
 
+        // fim tamanhos
 
+        //verifica se há mudança no número de linhas e colunas
         $scope.$watch('[width,length]', makeMap, true);
 
         function makeMap() {
@@ -51,17 +55,17 @@ angular
         function matrix(rows, cols, defaultValue) {
             var arr = [[]];
 
-            // Creates all lines:
+            // cria as linhas:
             for (var i = 0; i < rows; i++) {
 
-                // Creates an empty line
+                //cria uma linha vazia
                 arr[i] = [];
 
-                // Adds cols to the empty line:
+                // adiciona coluna nas linhas:
                 arr[i] = new Array(cols);
 
                 for (var j = 0; j < cols; j++) {
-                    // Initializes:
+                    // inicializa:
                     arr[i][j] = defaultValue;
                 }
             }
@@ -71,10 +75,13 @@ angular
 
         makeMap();
 
+
+        //Quando uma seta é clicada na tela
         $scope.sizeChange = function (plus, row){
             var rows = $scope.length;
             var cols = $scope.width;
 
+            //verifica se aumentou linha ou coluna e aumenta caso não esteja no máximo ou o contrário
             if(plus){
                 if(row && rows < maxRow)
                     $scope.length++;
@@ -86,11 +93,9 @@ angular
                 if(!row && cols > minRow)
                     $scope.width--
             }
+        };
 
-            return true;
-        }
-
-        //array das categorias
+        //array das categorias e imagem padrão
         $scope.categorias = [
             {
                 'nome' : "fantasia",
@@ -114,8 +119,10 @@ angular
             }
         ];
 
+
         var tilesArray = [];
 
+        //preenche o array de tiles com as informações básicas
         function preencheTiles(info){
             tilesArray = [];
 
@@ -135,14 +142,16 @@ angular
 
         $scope.selecionaCategoria = function(nomeCategoria){
 
+            //coloca informações básicas e genérica da tile da mesma categoria
+
             var info = {
                 idC : nomeCategoria.substring(0,3),
                 nomeCategoria : nomeCategoria,
-                dir : { dir : "images/"+nomeCategoria+"/"},
-                count: 5
+                dir : { dir : "images/"+nomeCategoria+"/"}
+            };
 
-            }
 
+            //verifica quantas imagens há na pasta da categoria
             $.when($.ajax({
                 url: 'fileCount',
                 type: "GET",
@@ -160,26 +169,31 @@ angular
         };
 
 
-
+        //inicializa qual tile está sendo movimentada
         var drag = undefined;
 
 
         $scope.dropped = function(evt) {
 
-
+            //guarda onde foi dropado a tile
             var dom = $(evt.event.target);
 
             if(dom.hasClass('rotateImage')){
                 dom = dom.closest('div');
             }
 
+            //se a tile movimentada existe
             if(drag) {
 
+                //remove as informações da tile movimentada
                 var img = drag.attr('data-img');
                 var id = drag.attr('data-id');
 
+
+                //verifica se é touch
                 if(drag[0] === dom[0]){
 
+                    //então se é touch remove as informações do touch
                     if(evt.event.changedTouches) {
                         var changedTouch = evt.event.changedTouches[0];
                         var elem = document.elementFromPoint(changedTouch.clientX, changedTouch.clientY);
@@ -188,10 +202,13 @@ angular
                     }
                 }
 
+
+                //passa as informações para a nova tile
                 dom.attr("style","background-image:url("+img+")");
                 dom.attr('data-img', img);
                 dom.attr('data-id', id);
 
+                //caso foi de uma tile para outra, limpa a tile arrastada
                 if(!drag.hasClass('peg')) {
                     drag.attr("style"," ");
                     drag.attr('data-id', 0);
@@ -201,10 +218,11 @@ angular
             }
 
 
-        }
+        };
 
-        $scope.lixo = function(evt) {
+        $scope.lixo = function() {
 
+            //limpa a tile que foi arrastada até a lixeira
             if(!drag.hasClass('peg')) {
                 drag.attr("style"," ");
                 drag.attr('data-id', 0);
@@ -212,14 +230,12 @@ angular
             }
 
 
-        }
+        };
 
+        //guarda as informações da tile arrastada
         $scope.onDragStart=function(data, evt){
             if ((evt.target !== undefined) && (evt.target.parentNode !== undefined)) {
-                var dom = $(evt.target);
-
-                drag = dom;
-
+                drag = $(evt.target);
             }
         };
 
@@ -229,33 +245,33 @@ angular
 
             var matrizJ = [];
 
-            var slotsId = new Array();
+            var slotsId = [];
 
-
-            $('.slot').each(function (key) {
+            //guarda o ID de cada slot
+            $('.slot').each(function () {
 
                 slotsId.push( $(this).attr('data-id')  );
 
             });
 
-
+            //transforma em uma matriz
             for (var i = 0; i < $scope.length; i++){
-                var linha = new Array();
+                var linha = [];
                 for (var j = 0; j < $scope.width; j++){
                     linha.push(  slotsId.shift()  );
                 }
                 matrizJ.push(linha);
             }
 
+            //guarda a matriz em um objeto json
             var jsonDownload = {
                 "linhas" : matrizJ.length,
                 "colunas" : matrizJ[0].length,
                 "matriz" : matrizJ
-            }
+            };
 
-            var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonDownload));
-
-            this.href = dataStr;
+            //baixa o json
+            this.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonDownload));
         });
 
         function idToImageUrl(id){
@@ -272,7 +288,7 @@ angular
                 'flo' : 'floresta',
                 'cid' : 'cidade',
                 'mar' : 'mar'
-            }
+            };
 
             var arr = [chunks.shift(), chunks.join('-')];
 
@@ -280,45 +296,48 @@ angular
 
         }
 
-        function degreeToRadians(deg){
-
-            switch(parseInt(deg)){
-                case 0:
-                    return 0;
-                case 90:
-                    return Math.PI/2;
-                case 180:
-                    return  Math.PI;
-                case 270:
-                    return Math.PI*3/2;
-                default :
-                    return 0;
-
-            }
-        }
+//        function degreeToRadians(deg){
+//
+//            switch(parseInt(deg)){
+//                case 0:
+//                    return 0;
+//                case 90:
+//                    return Math.PI/2;
+//                case 180:
+//                    return  Math.PI;
+//                case 270:
+//                    return Math.PI*3/2;
+//                default :
+//                    return 0;
+//
+//            }
+//        }
 
 
         $("#impJ").change(function( evt ) {
 
-            var files = evt.target.files; // FileList object
+            var files = evt.target.files; // lista de arquivos no upload
 
-            var f = files[0];
+            var f = files[0]; //pega o primeiro arquivo
 
-            var reader = new FileReader();
+            var reader = new FileReader(); //inicializa leitor
 
-            // Closure to capture the file information.
-            reader.onload = (function(theFile) {
+            reader.onload = (function() {
                 return function(e) {
-                    // Render thumbnail.
-                    var jsonObj = JSON.parse(e.target.result);
 
+                    var jsonObj = JSON.parse(e.target.result); //lê o arquivo
+
+
+                    //coloca linha e colunas do tamanho que está no arquivo
                     $scope.length = jsonObj.linhas;
                     $scope.width = jsonObj.colunas;
 
 
-                    $('.cat:first').trigger('click');
+                    $('.cat:first').trigger('click'); //abre a primeira categoria
 
-                    var ids = new Array();
+
+                    //transforma a matriz em um array deum nível
+                    var ids = [];
 
                     for (var i = 0; i < jsonObj.linhas; i++){
                         for (var j = 0; j < jsonObj.colunas; j++){
@@ -326,8 +345,8 @@ angular
                         }
                     }
 
-
-                    $('.slot').each(function (key) {
+                    //coloca as informações em cada slot de tile
+                    $('.slot').each(function () {
 
                         var id = ids.shift();
 
@@ -344,37 +363,42 @@ angular
                 };
             })(f);
 
-            // Read in the image file as a data URL.
+            //lê o arquivo como texto
             reader.readAsText(f);
 
         });
 
         $("#expI").click(function(){
 
+
+            //seleciona o contexto do canvas
             var canvas = document.getElementById("mapa");
             var ctx = canvas.getContext("2d");
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            var slotsImg = new Array();
+            var slotsImg = [];
 
             var tamanhoImagem = 400;
 
-
-            $('.slot').each(function (key) {
+            //pega cada imagem que estão nos slots
+            $('.slot').each(function () {
                 slotsImg.push( { 'imagem' : $(this).attr('data-img'), 'rotacao' : $(this).attr('data-deg') }  );
             });
 
+
+            //tamanho do canvas é o tamanho da imagem por coluna e linha
            canvas.height = $scope.length * tamanhoImagem;
            canvas.width = $scope.width * tamanhoImagem;
 
 
             var TO_RADIANS = Math.PI/180;
 
+
+            //para cada imagem coloca no canvas, com espaço de uma imagem para cima ou para baixo dependendo da matriz
             for (var i = 0; i < $scope.length; i++){
                 for (var j = 0; j < $scope.width; j++){
                     var imageSlot = slotsImg.shift();
-                    var rotacao = imageSlot.rotacao;
                     var imageObj = new Image();
                     imageObj.src = imageSlot.imagem;
                     imageObj.setAtX = j * tamanhoImagem;
@@ -382,11 +406,11 @@ angular
                     imageObj.onload = function() {
                         ctx.save();
 
-                        ctx.rotate(rotacao * TO_RADIANS);
+                        ctx.rotate(imageSlot.rotacao * TO_RADIANS);
 
                         ctx.drawImage(this, this.setAtX, this.setAtY, tamanhoImagem, tamanhoImagem);
 
-                        ctx.rotate( -1 * (rotacao * TO_RADIANS));
+                        ctx.rotate( -1 * (imageSlot.rotacao * TO_RADIANS));
 
                         ctx.restore();
                     };
@@ -400,19 +424,19 @@ angular
         });
 
 
-        function drawRotated(image, context) {
-            context.save();
-            context.translate(100, 100);
-            context.rotate(Math.PI / 4);
-            context.drawImage(image, -image.width / 2, -image.height / 2);
-            context.restore();
-        }
+//        function drawRotated(image, context) {
+//            context.save();
+//            context.translate(100, 100);
+//            context.rotate(Math.PI / 4);
+//            context.drawImage(image, -image.width / 2, -image.height / 2);
+//            context.restore();
+//        }
 
 
 
         $('.centro').on('click', '.rotate', function(){
 
-            $this = $(this).parent();
+            var $this = $(this).parent();
 
 
             var graus = $this.attr('data-deg');
@@ -461,10 +485,10 @@ angular
 
         });
 
-
+        //limpa todos os slots quando clica na lixeira
         $scope.limpaTudo = function (){
 
-            $('.slot').each(function (key) {
+            $('.slot').each(function () {
 
                 var $this = $(this);
 
