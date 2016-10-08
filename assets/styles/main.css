@@ -151,17 +151,16 @@ div{
 }
 
 
+.barra{
+    background-color: #167E9D !important;
+}
 .topo {
-    background-color: rgb(170, 225, 90);
+    background-color: #1DA7D0;
     padding: 2.5vw 10vw;
 }
 
-.esquerda{
-    background-color: rgb(125, 175, 210);
-}
-
-.direita{
-    background-color: rgb(255, 250, 90);
+.centro {
+    background-color: #21C1F1;
 }
 
 .fundo{
@@ -211,7 +210,6 @@ div{
 .cat {
     cursor: pointer;
     border-radius: 1vw;
-    box-shadow: 0.3vw 0.3vw 1vw #333;
     margin: 1vw 2vw;
     width: 7vw;
     height: 7vw;
@@ -230,12 +228,14 @@ div{
     opacity: .99;
     margin-bottom: 20px;
     background-image: none !important ;
-    background-color: rgb(250, 160, 35);
+    background-color: #03a9f4;
     border: 1px solid transparent;
     border-radius: 4px;
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-    box-shadow: 0.2vw 0.2vw 0.6vw #333;
     cursor: pointer;
+}
+
+.sombra{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
 }
 
 .arrows{
