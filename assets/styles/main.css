@@ -112,31 +112,6 @@ div{
 }
 
 
-.material-icons {
-    font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
-    font-size: 1vw;  /* Preferred icon size */
-    display: inline-block;
-    line-height: 1;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    white-space: nowrap;
-    direction: ltr;
-
-    /* Support for all WebKit browsers. */
-    -webkit-font-smoothing: antialiased;
-    /* Support for Safari and Chrome. */
-    text-rendering: optimizeLegibility;
-
-    /* Support for Firefox. */
-    -moz-osx-font-smoothing: grayscale;
-
-    /* Support for IE. */
-    font-feature-settings: 'liga';
-}
-
 .spinner {
     position: fixed;
     top: 50%;
@@ -150,6 +125,13 @@ div{
     height: 102px; /*hight of the spinner gif +2px to fix IE8 issue */
 }
 
+nav{
+    margin: 0 !important;
+}
+
+body{
+    background-color: #21C1F1 !important;
+}
 
 .barra{
     background-color: #167E9D !important;
@@ -165,10 +147,16 @@ div{
 
 .selecionado{
     border-color: #03a9f4 !important;
+    box-shadow: none !important;
+
 }
 
 .nao-selecionado{
     opacity: 0.5;
+}
+
+.button:active{
+    box-shadow: none !important;
 }
 
 .peg {
@@ -178,7 +166,6 @@ div{
     height: 5vw;
     margin: 1vw 0 0 1.5vw;
     display:inline-block;
-    background-color: rgb(125, 175, 210);
     background-repeat:no-repeat;
     background-size:contain;
     background-position:center;
@@ -223,18 +210,17 @@ div{
     background-position:center;
 }
 
+.cat:hover{
+    opacity: 1;
+}
+
 .lixeira{
     text-align: center;
     height: 5vw;
     width: 5vw;
     padding: 0.6vw;
-    opacity: .99;
     margin-bottom: 20px;
     background-image: none !important ;
-    background-color: #03a9f4;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
 .sombra{
