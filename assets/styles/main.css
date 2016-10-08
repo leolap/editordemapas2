@@ -163,9 +163,12 @@ div{
     background-color: #21C1F1;
 }
 
-.fundo{
-    background-color: rgb(205, 130, 180);
-    display: flex;
+.selecionado{
+    border-color: #03a9f4 !important;
+}
+
+.nao-selecionado{
+    opacity: 0.5;
 }
 
 .peg {

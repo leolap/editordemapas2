@@ -313,6 +313,19 @@ angular
 //            }
 //        }
 
+        //estilo de quando a categoria é clicada
+
+        $(".topo").on('click','.cat', function(){
+            $this = $(this);
+            $(".cat").addClass('nao-selecionado');
+            $(".cat").removeClass('selecionado');
+            $this.addClass('selecionado');
+            if($this.hasClass('nao-selecionado')){
+                $this.removeClass('nao-selecionado');
+            }
+
+        });
+
 
         $("#impJ").change(function( evt ) {
 
