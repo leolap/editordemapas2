@@ -499,8 +499,9 @@ angular
         });
 
         //limpa todos os slots quando clica na lixeira
-        $scope.limpaTudo = function (){
 
+
+        function limpaTudo(){
             $('.slot').each(function () {
 
                 var $this = $(this);
@@ -509,6 +510,28 @@ angular
                 $this.attr('data-id', 0);
                 $this.attr('data-img', "Null");
 
+            });
+        }
+
+        $scope.limpaTudo = function (){
+
+            bootbox.confirm({
+                message: "Deseja apagar tudo? ",
+                buttons: {
+                    confirm: {
+                        label: "Sim"+"<img src='images/icones/lixeira.svg' width='20vw' />",
+                        className: 'btn-danger'
+                    },
+                    cancel: {
+                        label: 'Não',
+                        className: 'btn-success'
+                    }
+                },
+                callback: function (result) {
+                    if(result) {
+                        limpaTudo();
+                    }
+                }
             });
 
         }

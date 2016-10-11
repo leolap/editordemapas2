@@ -25,7 +25,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="javascript:void(0)"><img src="images/univali.png" /> </a>
+                <a class="navbar-brand" href="javascript:void(0)"><img src="images/univali.png" width="50px" /> </a>
             </div>
 
             <div class="collapse navbar-collapse" id="navbar">
@@ -43,53 +43,24 @@
     </nav>
 
     <div class="row topo">
-        <div class="col-xs-9">
-            <div class="cat" ng-repeat="categoria in categorias" data-nome="{{ categoria.nome }}" style="background-image: url('{{ categoria.imgUrl }}')" ng-click="selecionaCategoria(categoria.nome)" ></div>
-        </div>
-        <div class="col-xs-3">
-            <img class="maos" src="images/icones/tap-2.svg" />
-        </div>
-    </div>
-
-    <div class="row centro">
-        <div class="col-xs-2 esquerda">
+        <div class="col-xs-offset-2 col-xs-8">
             <div class="row">
-                <div class="col-xs-offset-9 col-xs-3">
-                    <img class="maos" src="images/icones/pointing-up-2.svg" />
+                <div class="col-xs-12">
+                    <div class="cat" ng-repeat="categoria in categorias" data-nome="{{ categoria.nome }}" style="background-image: url('{{ categoria.imgUrl }}')" ng-click="selecionaCategoria(categoria.nome)" ></div>
                 </div>
+            <!--<div class="col-xs-3">-->
+                <!--<img class="maos" src="images/icones/tap-2.svg" />-->
+            <!--</div>-->
             </div>
-            <div style="z-index: 1">
-                <div class="peg" ng-repeat="tile in tiles" data-id="{{ tile.id }}"  data-img="{{ tile.imgUrl }}" style="background-image: url('{{ tile.imgUrl }}')"
-                     ng-drag="true" ng-drag-data="tile" data-allow-transform="true" ng-drag-start="onDragStart($data,$event)"></div>
-            </div>
-        </div>
-
-        <div class="col-xs-8 ">
-            <div ng-repeat="row in cells track by $index">
-                <div class="slot" ng-repeat="cell in row track by $index"
-                     ng-drop="true" ng-drop-success="dropped($event)" ng-drag="true" ng-drag-data="tile"
-                     data-id="0" data-img="null" data-deg="0"
-                     ng-drag-start="onDragStart($data,$event)" >
-
-                    <!-- <button class="rotate"><img class="rotateImage" src="images/icones/refresh.svg" /></button> -->
-
+            <div class="row" >
+                <div class="col-xs-12">
+                    <div class="peg" ng-repeat="tile in tiles" data-id="{{ tile.id }}"  data-img="{{ tile.imgUrl }}" style="background-image: url('{{ tile.imgUrl }}')"
+                         ng-drag="true" ng-drag-data="tile" data-allow-transform="true" ng-drag-start="onDragStart($data,$event)"></div>
                 </div>
-            </div>
-            <div ng-show="false">
-            <canvas id="mapa" width="{{ imagem.largura }}" height="{{ imagem.altura }}"></canvas>
+
             </div>
         </div>
         <div class="col-xs-2 ">
-            <div class="row">
-                <div class="col-xs-7">
-                    <a class="btn btn-info lixeira" ng-click="limpaTudo()" ng-drop-success="lixo($event)" ng-drop="true">
-                        <img src="images/icones/lixeira.svg" />
-                    </a>
-                </div>
-                <div class="col-xs-5">
-                    <img class="maos" src="images/icones/tap-2.svg" />
-                </div>
-            </div>
             <div class="row">
                 <div class="col-xs-12">
                     <button class="btn btn-info" ng-click="sizeChange(true,false)">
@@ -114,6 +85,45 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-xs-12">
+                    <a class="btn btn-info lixeira" ng-click="limpaTudo()" ng-drop-success="lixo($event)" ng-drop="true">
+                        <img src="images/icones/lixeira.svg" />
+                    </a>
+                </div>
+                <!--<div class="col-xs-5">-->
+                <!--<img class="maos" src="images/icones/tap-2.svg" />-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+
+    <div class="row centro">
+        <!--<div class="col-xs-2 esquerda">-->
+            <!--<div class="row">-->
+                <!--<div class="col-xs-offset-9 col-xs-3">-->
+                    <!--<img class="maos" src="images/icones/pointing-up-2.svg" />-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <div class="col-xs-12" style="text-align: center;">
+            <div ng-repeat="row in cells track by $index">
+                <div class="slot" ng-repeat="cell in row track by $index"
+                     ng-drop="true" ng-drop-success="dropped($event)" ng-drag="true" ng-drag-data="tile"
+                     data-id="0" data-img="null" data-deg="0"
+                     ng-drag-start="onDragStart($data,$event)" >
+
+                    <!-- <button class="rotate"><img class="rotateImage" src="images/icones/refresh.svg" /></button> -->
+
+                </div>
+            </div>
+            <div ng-show="false">
+            <canvas id="mapa" width="{{ imagem.largura }}" height="{{ imagem.altura }}"></canvas>
+            </div>
+        </div>
+
+
         </div>
 
     </div>
@@ -127,6 +137,7 @@
 <script src="js/Framework/angular-touch/angular-touch.js"></script>
 <script src="js/AngularDnD/ngDraggable.js"></script>
 <script src="js/Bootstrap/bootstrap.min.js"></script>
+<script src="js/Bootstrap/bootbox.min.js"></script>
 <script src="js/Material/material.min.js"></script>
 <script src="js/Material/ripples.min.js"></script>
 <script src="js/plugins.js"></script>

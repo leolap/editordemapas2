@@ -93,14 +93,13 @@ textarea {
 
 
 [draggable] {
-    /* not applied by the directive, but useful to indicate a draggable element */
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
     cursor: move;
     border:1px solid black;
     z-index: 100000;
+}
+
+[ng-drag].dragging {
+
 }
 
 div{
@@ -138,11 +137,14 @@ body{
 }
 .topo {
     background-color: #1DA7D0;
-    padding: 2.5vw 10vw;
+    text-align: center;
+    overflow: hidden;
 }
 
 .centro {
     background-color: #21C1F1;
+    overflow: auto;
+    max-height: 600px;
 }
 
 .selecionado{
@@ -155,7 +157,7 @@ body{
 }
 
 .btn-info{
-    background-color: #03a9f4 !important;
+    background-color: #5BC0DE !important;
 }
 
 .nao-selecionado{
@@ -178,9 +180,9 @@ body{
     background-position:center;
 }
 
-.row{
-    display: flex;
-}
+/*.row{*/
+    /*display: flex;*/
+/*}*/
 
 .slot {
     opacity: .99;
@@ -206,7 +208,6 @@ body{
 
 .cat {
     cursor: pointer;
-    border-radius: 1vw;
     margin: 1vw 2vw;
     width: 7vw;
     height: 7vw;
@@ -236,6 +237,14 @@ body{
 
 .arrows{
     width: 2vw;
+}
+
+.btn{
+    margin: 3px 1px !important;
+}
+
+.nav li{
+    display: inline-block;
 }
 
 .maos{
