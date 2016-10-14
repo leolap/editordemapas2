@@ -30,12 +30,12 @@
 
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="nav navbar-nav">
-                    <li><a href="#" id="expJ" class="btn btn-top" download="mapa.json"><img class="arrows" src="images/icones/download-1.svg" /> Salvar </a></li>
+                    <li><a href="#" id="expJ" class="btn btn-top" download="mapa.json"><!-- img class="arrows" src="images/icones/download-1.svg" / --> Salvar </a></li>
                     <li><label for="impJ" class="btn btn-top">
-                            <img class="arrows" src="images/icones/up-arrow-5.svg" /> Carregar
+                            <!--<img class="arrows" src="images/icones/up-arrow-5.svg" />--> Carregar
                         </label>
                         <input ng-show="false" type="file" id="impJ" /></li>
-                    <li><a href="#" class="btn btn-top" id="expI"><img class="arrows" src="images/icones/mapa.svg" /> Imprimir</a></li>
+                    <li><a href="#" class="btn btn-top" id="expI"> <!-- <img class="arrows" src="images/icones/mapa.svg" /> --> Imprimir</a></li>
                 </ul>
 
             </div><!-- /.navbar-collapse -->
@@ -48,9 +48,6 @@
                 <div class="col-xs-12">
                     <div class="cat" ng-repeat="categoria in categorias" data-nome="{{ categoria.nome }}" style="background-image: url('{{ categoria.imgUrl }}')" ng-click="selecionaCategoria(categoria.nome)" ></div>
                 </div>
-            <!--<div class="col-xs-3">-->
-                <!--<img class="maos" src="images/icones/tap-2.svg" />-->
-            <!--</div>-->
             </div>
             <div class="row divTiles">
                 <div class="linhaTiles">
@@ -100,12 +97,13 @@
                     <img class="arrows" src="images/icones/minus.svg" />
                 </button>
             </div>
-            <div style="text-align: right">
-                <a class="btn btn-info lixeira" ng-click="limpaTudo()" ng-drop-success="lixo($event)" ng-drop="true">
-                    <img src="images/icones/lixeira.svg" />
-                </a>
-            </div>
         </div>
+    </div>
+
+    <div class="divLixo">
+        <a class="btn btn-info lixeira" ng-click="limpaTudo()" ng-drop-success="lixo($event)" ng-drop="true">
+            <img src="images/icones/lixeira.svg" />
+        </a>
     </div>
 
 

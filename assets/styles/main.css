@@ -101,6 +101,7 @@ textarea {
 [ng-drag].dragging {
     position: relative;
     z-index: 99999;
+    transform-style: flat !important;
 }
 
 div{
@@ -159,16 +160,21 @@ body{
 .centro {
     position: relative;
     background-color: #A5E9FF;
-    overflow-y: auto;
-    overflow-x: hidden;
-    max-height: 24vw;
     width: 86vw;
     padding-left: 18vw
 }
 
+.divLixo{
+    height: 40px;
+    position: fixed;
+    text-align: right;
+    bottom:10%;
+    width:100%;
+    opacity: 1;
+}
+
 .divTiles{
-    overflow-x: auto;
-    overflow-y: hidden;
+
     white-space: nowrap;
     margin: auto;
     width: 50vw;
