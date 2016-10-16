@@ -98,10 +98,8 @@ textarea {
     z-index: 100000;
 }
 
-[ng-drag].dragging {
-    position: relative;
-    z-index: 99999;
-    transform-style: flat !important;
+[ng-drag].dragging{
+    position: relative !important;
 }
 
 div{
@@ -138,7 +136,6 @@ body{
     background-color: #167E9D !important;
 }
 .topo {
-    background-color: #A5E9FF;
     text-align: center;
     overflow: hidden;
 }
@@ -159,7 +156,6 @@ body{
 
 .centro {
     position: relative;
-    background-color: #A5E9FF;
     width: 86vw;
     padding-left: 18vw
 }

@@ -14,14 +14,9 @@ $(document).ready(function(){
 
 
 angular
-    .module('ddApp', ['ngTouch', 'ngDraggable']) // register the directive with your app module
-    .controller('ddController', ['$scope' , function($scope){ // function referenced by the drop target
+    .module('ddApp', ['ngTouch', 'ngDraggable'])
+    .controller('ddController', ['$scope' , function($scope){
 
-        function scrollLastSlot(){
-            var el = document.getElementById("areaDeTrabalho");
-            el.scrollTop = el.scrollHeight - el.clientHeight;
-
-        }
 
 
 
@@ -91,10 +86,8 @@ angular
 
             //verifica se aumentou linha ou coluna e aumenta caso não esteja no máximo ou o contrário
             if(plus){
-                if(row && rows < maxRow) {
+                if(row && rows < maxRow)
                     $scope.length++;
-                    scrollLastSlot();
-                }
                 if(!row && cols < maxCol)
                     $scope.width++
             }else{
