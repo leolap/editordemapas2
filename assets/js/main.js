@@ -181,7 +181,7 @@ angular
             //guarda onde foi dropado a tile
             var dom = $(evt.event.target);
 
-            if(dom.hasClass('rotateImage')){
+            if(dom.hasClass('rotateImage') || dom.hasClass('rotate')){
                 dom = dom.closest('div');
             }
 
@@ -191,6 +191,7 @@ angular
                 //remove as informações da tile movimentada
                 var img = drag.attr('data-img');
                 var id = drag.attr('data-id');
+                var rotate = drag.attr('data-rotate');
 
 
                 //verifica se é touch
@@ -210,12 +211,14 @@ angular
                 dom.attr("style","background-image:url("+img+")");
                 dom.attr('data-img', img);
                 dom.attr('data-id', id);
+                dom.attr('data-rotate', rotate);
 
                 //caso foi de uma tile para outra, limpa a tile arrastada
                 if(!drag.hasClass('peg')) {
                     drag.attr("style"," ");
                     drag.attr('data-id', 0);
                     drag.attr('data-img', "Null");
+                    drag.attr('data-rotate', "false");
                 }
 
             }
@@ -230,6 +233,7 @@ angular
                 drag.attr("style"," ");
                 drag.attr('data-id', 0);
                 drag.attr('data-img', "Null");
+                drag.attr('data-rotate', "false");
             }
 
 
@@ -253,7 +257,9 @@ angular
             //guarda o ID de cada slot
             $('.slot').each(function () {
 
-                slotsId.push( $(this).attr('data-id')  );
+                var objId = { 'id' : $(this).attr('data-id'), 'rotate' : $(this).attr('data-rotate') };
+
+                slotsId.push(  objId );
 
             });
 
@@ -277,13 +283,13 @@ angular
             this.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(jsonDownload));
         });
 
-        function idToImageUrl(id){
+        function idToImageUrl(obj){
 
-            if(id == 0){
+            if(obj.id == 0){
                 return false;
             }
 
-            var chunks = id.split("-");
+            var chunks = obj.id.split("-");
 
             var categorias = {
                 'fan' : 'fantasia',
@@ -295,36 +301,23 @@ angular
 
             var arr = [chunks.shift(), chunks.join('-')];
 
-            return "images/"+categorias[arr[0]]+"/"+arr[1]+".png";
+            var rotate = " ";
+
+            if(obj.rotate == 'true'){
+                rotate = "rotate/";
+            }
+
+            return "images/"+categorias[arr[0]]+"/"+rotate+arr[1]+".png";
 
         }
-
-//        function degreeToRadians(deg){
-//
-//            switch(parseInt(deg)){
-//                case 0:
-//                    return 0;
-//                case 90:
-//                    return Math.PI/2;
-//                case 180:
-//                    return  Math.PI;
-//                case 270:
-//                    return Math.PI*3/2;
-//                default :
-//                    return 0;
-//
-//            }
-//        }
 
         //estilo de quando a categoria é clicada
 
         $(".topo").on('click','.cat', function(){
-            $this = $(this);
-            $(".cat").addClass('nao-selecionado');
-            $(".cat").removeClass('selecionado');
-            $this.addClass('selecionado');
-            if($this.hasClass('nao-selecionado')){
-                $this.removeClass('nao-selecionado');
+            $(".cat").addClass('nao-selecionado').removeClass('selecionado');
+            $(this).addClass('selecionado');
+            if($(this).hasClass('nao-selecionado')){
+                $(this).removeClass('nao-selecionado');
             }
 
         });
@@ -364,15 +357,17 @@ angular
                     //coloca as informações em cada slot de tile
                     $('.slot').each(function () {
 
-                        var id = ids.shift();
+                        var obj = ids.shift();
 
-                        var img = idToImageUrl(id);
+                        var img = idToImageUrl(obj);
 
                         if(img) {
                             $(this).attr("style","background-image:url("+img+")");
                             $(this).attr('data-img', img);
                         }
-                        $(this).attr('data-id', id);
+                        $(this).attr('data-id', obj.id);
+                        $(this).attr('data-rotate', obj.rotate);
+
 
                     });
 
@@ -399,7 +394,7 @@ angular
 
             //pega cada imagem que estão nos slots
             $('.slot').each(function () {
-                slotsImg.push( { 'imagem' : $(this).attr('data-img'), 'rotacao' : $(this).attr('data-deg') }  );
+                slotsImg.push( { 'imagem' : $(this).attr('data-img') }  );
             });
 
 
@@ -422,11 +417,7 @@ angular
                     imageObj.onload = function() {
                         ctx.save();
 
-                        ctx.rotate(imageSlot.rotacao * TO_RADIANS);
-
                         ctx.drawImage(this, this.setAtX, this.setAtY, tamanhoImagem, tamanhoImagem);
-
-                        ctx.rotate( -1 * (imageSlot.rotacao * TO_RADIANS));
 
                         ctx.restore();
                     };
@@ -435,18 +426,10 @@ angular
 
             }
 
+            limpaTudo();
 
             window.open().location = canvas.toDataURL("image/‌​png");
         });
-
-
-//        function drawRotated(image, context) {
-//            context.save();
-//            context.translate(100, 100);
-//            context.rotate(Math.PI / 4);
-//            context.drawImage(image, -image.width / 2, -image.height / 2);
-//            context.restore();
-//        }
 
 
 
@@ -454,49 +437,25 @@ angular
 
             var $this = $(this).parent();
 
+            var isRotated = $this.attr('data-rotate') === 'true';
+            var arrayImg = $this.attr('data-img').split('/');
 
-            var graus = $this.attr('data-deg');
 
-            var grausNovo = 0;
-            var classeVelha;
-            var classeNova;
 
-            switch(graus){
-                case "0":
+            if(isRotated){
+                $this.attr('data-rotate', 'false');
+                var index = arrayImg.indexOf('rotate');
+                arrayImg.splice(index, 1);
 
-                    grausNovo = 90;
-                    classeNova = "rot90";
-                    break;
-
-                case "90":
-
-                    grausNovo = 180;
-                    classeVelha = "rot90";
-                    classeNova = "rot180";
-                    break;
-
-                case "180":
-                    grausNovo = 270;
-                    classeVelha = "rot180";
-                    classeNova = "rot270";
-                    break;
-
-                case "270":
-                    grausNovo = 0;
-                    classeVelha = "rot270";
-                    break;
-                default :
-
-                    grausNovo = 0;
-                    break;
-
+            }else{
+                $this.attr('data-rotate', 'true');
+                arrayImg.splice(2, 0, 'rotate');
             }
 
-            $this.attr('data-deg', grausNovo);
-            if(classeVelha)
-                $this.removeClass(classeVelha);
-            if(classeNova)
-                $this.addClass(classeNova);
+            var img = arrayImg.join('/');
+
+            $this.attr("style","background-image:url("+img+")");
+            $this.attr('data-img', img);
 
 
         });
@@ -512,6 +471,7 @@ angular
                 $this.attr("style"," ");
                 $this.attr('data-id', 0);
                 $this.attr('data-img', "Null");
+                $this.attr('data-rotate', "false");
 
             });
         }

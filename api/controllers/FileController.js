@@ -17,7 +17,7 @@ module.exports = {
        var count = files.length;
 
       return  res.ok({
-          count: count-1
+          count: count-2
       });
     }
 };
