@@ -301,7 +301,7 @@ angular
 
             var arr = [chunks.shift(), chunks.join('-')];
 
-            var rotate = " ";
+            var rotate = "";
 
             if(obj.rotate == 'true'){
                 rotate = "rotate/";
