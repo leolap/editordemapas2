@@ -181,9 +181,6 @@ angular
             //guarda onde foi dropado a tile
             var dom = $(evt.event.target);
 
-            if(dom.hasClass('rotateImage') || dom.hasClass('rotate')){
-                dom = dom.closest('div');
-            }
 
             //se a tile movimentada existe
             if(drag) {
@@ -205,6 +202,12 @@ angular
                         dom = $(elem);
                     }
                 }
+
+
+                if(dom.hasClass('rotateImage') || dom.hasClass('rotate')){
+                    dom = dom.closest('div');
+                }
+
 
 
                 //passa as informações para a nova tile
