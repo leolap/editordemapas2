@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="linhaTiles">
+                <div class="linhaTiles" ng-drop-success="lixo($event)" ng-drop="true">
                     <div class="peg" ng-repeat="tile in tiles" data-id="{{ tile.id }}"  data-img="{{ tile.imgUrl }}" style="background-image: url('{{ tile.imgUrl }}')" data-rotate="false"
                          ng-drag="true" ng-drag-data="tile"  data-allow-transform="true" ng-drag-start="onDragStart($data,$event)"></div>
                 </div>
